@@ -1,6 +1,6 @@
 package com.user.service.services;
 
-import com.user.service.entity.User;
+import com.user.service.entities.User;
 import com.user.service.exceptions.ResourceNotFoundException;
 import com.user.service.repository.UserRepository;
 import lombok.Data;

@@ -1,9 +1,9 @@
 package com.user.service.services;
 
-import com.user.service.entity.User;
+import com.user.service.entities.Rating;
+import com.user.service.entities.User;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface UserService {
     User saveUser(User user);
