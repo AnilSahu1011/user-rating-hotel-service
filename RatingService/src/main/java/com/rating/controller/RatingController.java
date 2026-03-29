@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/rating")
@@ -17,6 +18,8 @@ public class RatingController {
 
     @PostMapping
     public ResponseEntity<Rating> saveRating(@RequestBody Rating rating) {
+        String id = UUID.randomUUID().toString();
+        rating.setRatingId(id);
         Rating savedRating = ratingService.createRating(rating);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedRating);
     }
@@ -43,6 +46,4 @@ public class RatingController {
         List<Rating> ratings = ratingService.getRatingsByHotelId(hotelId);
         return ResponseEntity.status(HttpStatus.OK).body(ratings);
     }
-
-
 }

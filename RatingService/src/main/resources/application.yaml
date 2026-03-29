@@ -1,8 +1,13 @@
 spring:
   application:
     name: RatingService
-  data:
-    mongodb:
-      uri: mongodb://localhost:27017/rating_micro_db
+  datasource:
+    url: jdbc:postgresql://localhost:5432/rating_micro_db
+    username: postgres
+    password: root
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
 server:
   port: 8083

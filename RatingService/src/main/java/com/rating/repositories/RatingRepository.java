@@ -1,13 +1,13 @@
 package com.rating.repositories;
 
 import com.rating.entities.Rating;
-import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository
-public interface RatingRepository extends MongoRepository<Rating, String> {
+public interface RatingRepository extends JpaRepository<Rating, String> {
     List<Rating> findAllByUserId(String userId);
     List<Rating> findAllByHotelId(String hotelId);
 }

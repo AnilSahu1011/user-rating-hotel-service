@@ -16,7 +16,9 @@ public class RatingServiceImpl implements RatingService {
 
     @Override
     public Rating createRating(Rating rating) {
-        return ratingRepository.save(rating);
+        Rating saved = ratingRepository.save(rating);
+        System.out.println("Saved to DB: " + saved);
+        return saved;
     }
 
     @Override
