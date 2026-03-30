@@ -1,13 +1,13 @@
 package com.rating.services;
 
-import com.rating.entities.Rating;
+import com.rating.Dto.RatingDto;
 
 import java.util.List;
 
 public interface RatingService {
-    Rating createRating(Rating rating);
-    Rating getRating(String id);
-    List<Rating> getRating();
-    List<Rating> getRatingsOfUserId(String userId);
-    List<Rating> getRatingsByHotelId(String hotelId);
+    RatingDto createRating(RatingDto ratingDto);
+    RatingDto getRating(String id);
+    List<RatingDto> getRating();
+    List<RatingDto> getRatingsOfUserId(String userId);
+    List<RatingDto> getRatingsByHotelId(String hotelId);
 }

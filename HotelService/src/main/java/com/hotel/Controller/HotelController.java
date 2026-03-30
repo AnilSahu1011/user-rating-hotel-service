@@ -1,5 +1,6 @@
 package com.hotel.Controller;
 
+import com.hotel.dto.HotelDto;
 import com.hotel.entities.Hotel;
 import com.hotel.services.HotelService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,20 +17,18 @@ public class HotelController {
     @Autowired
     private HotelService hotelService;
     @GetMapping
-    public ResponseEntity<List<Hotel>> getAllHotels() {
-        List<Hotel> hotels =  hotelService.getAllHotels();
-        return ResponseEntity.status(HttpStatus.OK).body(hotels);
+    public ResponseEntity<List<HotelDto>> getAllHotels() {
+        List<HotelDto> hotelDtos =  hotelService.getAllHotels();
+        return ResponseEntity.status(HttpStatus.OK).body(hotelDtos);
     }
     @GetMapping("/{id}")
-    public ResponseEntity<Hotel> getHotelById(@PathVariable String id) {
-        Hotel hotel =  hotelService.getHotelById(id);
-        return ResponseEntity.status(HttpStatus.OK).body(hotel);
+    public ResponseEntity<HotelDto> getHotelById(@PathVariable String id) {
+        HotelDto hotelDto =  hotelService.getHotelById(id);
+        return ResponseEntity.status(HttpStatus.OK).body(hotelDto);
     }
     @PostMapping()
-    public ResponseEntity<Hotel> saveHotel(@RequestBody Hotel hotel) {
-        String id = UUID.randomUUID().toString();
-        hotel.setId(id);
-        Hotel newHotel = hotelService.createHotel(hotel);
-        return ResponseEntity.status(HttpStatus.CREATED).body(newHotel);
+    public ResponseEntity<HotelDto> saveHotel(@RequestBody HotelDto hotelDto) {
+        HotelDto newHotelDto = hotelService.createHotel(hotelDto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(newHotelDto);
     }
 }
