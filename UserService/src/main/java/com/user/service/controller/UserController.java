@@ -1,6 +1,6 @@
 package com.user.service.controller;
 
-import com.user.service.entities.User;
+import com.user.service.dto.UserDto;
 import com.user.service.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,34 +11,35 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/api/user")
 public class UserController {
 
     @Autowired
     private UserService userService;
 
     @PostMapping
-    public ResponseEntity<User> createUser(@RequestBody User user) {
+    public ResponseEntity<UserDto> createUser(@RequestBody UserDto userDto) {
         String randomUserId = UUID.randomUUID().toString();
-        user.setUserId(randomUserId);
-        User savedUser = userService.saveUser(user);
+        userDto.setUserId(randomUserId);
+        UserDto savedUser = userService.saveUser(userDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedUser);
     }
+
     @GetMapping("/{id}")
-    public ResponseEntity<User> getSingleUser(@PathVariable String id) {
-        User user = userService.getUserByUserId(id);
-        return ResponseEntity.status(HttpStatus.OK).body(user);
+    public ResponseEntity<UserDto> getSingleUser(@PathVariable String id) {
+        UserDto userDto = userService.getUserByUserId(id);
+        return ResponseEntity.status(HttpStatus.OK).body(userDto);
     }
     @GetMapping
-    public ResponseEntity<List<User>> getAllUsers() {
-        List<User> users = userService.getAllUsers();
+    public ResponseEntity<List<UserDto>> getAllUsers() {
+        List<UserDto> users = userService.getAllUsers();
         return ResponseEntity.status(HttpStatus.OK).body(users);
     }
 
     @PutMapping
-    public ResponseEntity<User> updateUser(@RequestBody User user) {
-        userService.updateUser(user);
-        return ResponseEntity.status(HttpStatus.OK).body(user);
+    public ResponseEntity<UserDto> updateUser(@RequestBody UserDto userDto) {
+        userService.updateUser(userDto);
+        return ResponseEntity.status(HttpStatus.OK).body(userDto);
     }
 
     @DeleteMapping("/{id}")

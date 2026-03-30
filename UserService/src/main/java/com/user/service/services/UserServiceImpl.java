@@ -1,52 +1,69 @@
 package com.user.service.services;
 
+import com.user.service.dto.UserDto;
 import com.user.service.entities.User;
 import com.user.service.exceptions.ResourceNotFoundException;
 import com.user.service.repository.UserRepository;
-import lombok.Data;
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
-@Data
 @Service
 public class UserServiceImpl implements UserService {
 
-    private final UserRepository userRepository;
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private ModelMapper modelMapper;
 
     @Override
-    public User saveUser(User user) {
-        return userRepository.save(user);
+    public UserDto saveUser(UserDto userDto) {
+        User newUser = modelMapper.map(userDto, User.class);
+        User savedUser = userRepository.save(newUser);
+        return modelMapper.map(savedUser, UserDto.class);
     }
 
     @Override
-    public List<User> getAllUsers() {
-        return userRepository.findAll();
+    public List<UserDto> getAllUsers() {
+        List<User> users = userRepository.findAll();
+        return users
+                .stream()
+                .map(user->modelMapper.map(user, UserDto.class))
+                .collect(Collectors.toList());
     }
 
     @Override
-    public User getUserByUserId(String id) {
-        return userRepository.findById(id)
+    public UserDto getUserByUserId(String id) {
+        User getUSer = userRepository.findById(id)
                 .orElseThrow(() ->
                         new ResourceNotFoundException("User not found with id: " + id));
+        return modelMapper.map(getUSer, UserDto.class);
     }
 
     @Override
     public String deleteUserById(String id) {
-        User user = getUserByUserId(id);
+        UserDto userDto = getUserByUserId(id);
+        User user = modelMapper.map(userDto, User.class);
         userRepository.delete(user);
         return "User deleted successfully with id: " + id;
     }
 
     @Override
-    public User updateUser(User user) {
+    public UserDto updateUser(UserDto userDto) {
+        User user = modelMapper.map(userDto, User.class);
 
-        User existingUser = getUserByUserId(user.getUserId());
+        UserDto existingUserDto = getUserByUserId(user.getUserId());
 
-        existingUser.setName(user.getName());
-        existingUser.setEmail(user.getEmail());
-        existingUser.setAbout(user.getAbout());
+        existingUserDto.setName(user.getName());
+        existingUserDto.setEmail(user.getEmail());
+        existingUserDto.setAbout(user.getAbout());
 
-        return userRepository.save(existingUser);
+        User updatedUser = modelMapper.map(existingUserDto, User.class);
+        User savedUser = userRepository.save(updatedUser);
+        return modelMapper.map(savedUser, UserDto.class);
     }
 }

@@ -1,17 +1,18 @@
 package com.user.service.services;
 
+import com.user.service.dto.UserDto;
 import com.user.service.entities.User;
 
 import java.util.List;
 
 public interface UserService {
-    User saveUser(User user);
+    UserDto saveUser(UserDto userDto);
 
-    List<User> getAllUsers();
+    List<UserDto> getAllUsers();
 
-    User getUserByUserId(String id);
+    UserDto getUserByUserId(String id);
 
     String deleteUserById(String id);
 
-    User updateUser(User user);
+    UserDto updateUser(UserDto userDto);
 }
